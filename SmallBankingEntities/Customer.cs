@@ -26,9 +26,32 @@ namespace SmallBankingClassLibrary
         }
 
         //Properties
+        /// <summary>
+        /// Property containing the TransactionCost of the customer
+        /// </summary>
         public decimal TransactionCost { get => GetTransactionCost(); }
+        /// <summary>
+        /// Get Property containing the monthltAccountFee
+        /// </summary>
         public decimal MonthlyAccountFee { get => GetMonthlyAccountFee(); }
-        public string CPR { get => cPR; private set => cPR = value; }
+        /// <summary>
+        /// Gets or set(Only in constructor) the CPR value
+        /// The CPR number must be exactly 9 digits.
+        /// </summary>
+        public string CPR
+        {
+            get { return cPR; }
+            private set
+            {
+                (bool isValid, string errorMessage) = ValidateCPR(value);
+                if (isValid) cPR = value;
+                else
+                {
+                    throw new ArgumentException(errorMessage);
+                }
+            }
+        }
+        //{ get => cPR; private set => cPR = value; }
         public string Name { get => name; set => name = value; }
 
         /// <summary>
@@ -41,7 +64,13 @@ namespace SmallBankingClassLibrary
         //Methods
         public decimal CalculateCostOfMonth(Month month)
         {
-            return 4;
+            decimal cost = 0;
+            foreach (Account accountItem in Accounts)
+            {
+                cost = cost + accountItem.CalculateCostOfMonth(month, TransactionCost);
+                cost = cost + MonthlyAccountFee;
+            }
+            return cost;
         }
 
         public int AddAcount(Account account)
@@ -71,6 +100,22 @@ namespace SmallBankingClassLibrary
         public virtual decimal GetMonthlyAccountFee()
         {
             return decimal.Parse("15");
+        }
+
+        private (bool isValid, string errorMessage) ValidateCPR(string value)
+        {
+            if (value.Length !=9)
+            {
+                return (false, "The length of the CPR number must be excactly 9");
+            }
+            else if (!int.TryParse(value, out int number))
+            {
+                return (false, "A CPR number may only contain numbers");
+            }
+            else
+            {
+                return (true, string.Empty);
+            }
         }
     }
 }

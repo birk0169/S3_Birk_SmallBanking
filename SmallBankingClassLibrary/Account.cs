@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SmallBankingClassLibrary
 {
-    class Account
+    public class Account
     {
         private decimal balance;
-        //private bool deposite;
-        //private bool withdrawl
-        private List<Transaction> transactions;
+        private List<Transaction> transactions = new List<Transaction>();
 
         //Properties
         public string AccountNumber { get; }
-        public IReadOnlyCollection<Transaction> MyProperty { get; }
+        public ReadOnlyCollection<Transaction> Transactions { get { return transactions.AsReadOnly(); } }
 
         //Methods
-        public void CalculateCost()
+        public decimal CalculateCostOfMonth(Month month)
         {
 
         }
