@@ -62,6 +62,13 @@ namespace SmallBankingClassLibrary
        
 
         //Methods
+        /// <summary>
+        /// A methods that calculates the total monthly costs of all of a customers accounts for both Transactions fees and monthely costs.
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns>
+        /// The total cost of the selected month in decimal
+        /// </returns>
         public decimal CalculateCostOfMonth(Month month)
         {
             decimal cost = 0;
@@ -73,6 +80,13 @@ namespace SmallBankingClassLibrary
             return cost;
         }
 
+        /// <summary>
+        /// Add an account to the customer
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns>
+        /// The number of acounts belonging to the customer after the new one has been added in int.
+        /// </returns>
         public int AddAcount(Account account)
         {
             if (account is null) throw new ArgumentNullException(nameof(account));
