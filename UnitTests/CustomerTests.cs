@@ -78,5 +78,17 @@ namespace UnitTests
         {
             Customer test = new Customer("name", "1");
         }
+
+        [TestMethod]
+        public void AddAccount_ReturnsAccountCount_True()
+        {
+            //Arrange
+            Customer test = testCustomer;
+            SavingAccount testAccount = new SavingAccount("22334455", 2, 400);
+
+            //Act & Assert
+            Assert.AreEqual(test.Accounts.Count+1, test.AddAcount(testAccount));
+            
+        }
     }
 }
